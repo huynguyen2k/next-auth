@@ -1,4 +1,3 @@
-import * as React from 'react';
 import useSWR from 'swr';
 
 export interface ProfileDetail {
@@ -7,8 +6,11 @@ export interface ProfileDetail {
 
 export function ProfileDetail({ userId }: ProfileDetail) {
   const { data, mutate, error, isValidating } = useSWR(`/students/${userId}`, {
+    revalidateIfStale: false,
+    revalidateOnMount: true,
     revalidateOnFocus: false,
-    dedupingInterval: 60 * 60 * 1000,
+    revalidateOnReconnect: false,
+    shouldRetryOnError: false,
   });
 
   const handleProfileChange = () => {
