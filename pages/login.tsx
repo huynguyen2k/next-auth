@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { authApi } from '../api-client';
 import { useAuth } from '../hooks';
@@ -5,6 +6,7 @@ import { useAuth } from '../hooks';
 export interface LoginPageProps {}
 
 function LoginPage(props: LoginPageProps) {
+  const router = useRouter();
   const { data: profile, login, logout } = useAuth({ revalidateOnMount: false });
 
   const handleLoginClick = async () => {
@@ -13,6 +15,7 @@ function LoginPage(props: LoginPageProps) {
         username: 'test123',
         password: 'test123',
       });
+      router.push('/about');
     } catch (error) {
       console.log('Failed to login: ', error);
     }
@@ -46,6 +49,7 @@ function LoginPage(props: LoginPageProps) {
       <button onClick={handleLoginClick}>Login</button>
       <button onClick={handleLogoutClick}>Logout</button>
       <button onClick={handleGetProfileClick}>Get profile</button>
+      <button onClick={() => router.push('/about')}>Go to about</button>
     </div>
   );
 }

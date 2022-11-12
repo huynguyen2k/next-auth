@@ -18,6 +18,8 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
     ...options,
   });
 
+  const isFirstLoading = data === undefined && error === undefined;
+
   const login = async (data: LoginPayload) => {
     await authApi.login(data);
     await mutate();
@@ -28,5 +30,5 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
     mutate(null, { revalidate: false });
   };
 
-  return { data, error, isValidating, login, logout };
+  return { data, error, isValidating, isFirstLoading, login, logout };
 }
