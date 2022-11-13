@@ -8,13 +8,13 @@ interface AuthProps {
 
 export function Auth({ children }: AuthProps) {
   const router = useRouter();
-  const { isFirstLoading, data } = useAuth();
+  const { isValidating, data } = useAuth();
 
   useEffect(() => {
-    if (!isFirstLoading && !data) router.push('/login');
-  }, [data, isFirstLoading, router]);
+    if (!isValidating && !data) router.push('/login');
+  }, [data, isValidating, router]);
 
-  if (!data) return <h3>Loading ...</h3>;
+  if (isValidating || !data) return <h3>Loading ...</h3>;
 
   return <>{children}</>;
 }
